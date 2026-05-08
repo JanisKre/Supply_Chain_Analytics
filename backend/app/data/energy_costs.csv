@@ -1,0 +1,51 @@
+iso3,country_name,energy_cost_index
+CHN,China,42
+DEU,Germany,78
+USA,United States,55
+JPN,Japan,72
+KOR,South Korea,65
+FRA,France,60
+GBR,United Kingdom,75
+ITA,Italy,80
+NLD,Netherlands,74
+BEL,Belgium,76
+AUS,Australia,50
+CAN,Canada,45
+BRA,Brazil,48
+RUS,Russia,28
+IND,India,38
+ZAF,South Africa,40
+MYS,Malaysia,35
+THA,Thailand,42
+CZE,Czech Republic,65
+POL,Poland,60
+MEX,Mexico,48
+TUR,Turkey,55
+IDN,Indonesia,40
+VNM,Vietnam,42
+MMR,Myanmar,35
+COD,DR Congo,30
+ZMB,Zambia,32
+ZWE,Zimbabwe,33
+MOZ,Mozambique,31
+MDG,Madagascar,30
+PRK,North Korea,25
+HUN,Hungary,62
+SVK,Slovakia,63
+ROU,Romania,55
+AUT,Austria,70
+SWE,Sweden,58
+NOR,Norway,35
+DNK,Denmark,72
+FIN,Finland,60
+CHE,Switzerland,68
+ESP,Spain,71
+PRT,Portugal,68
+GRC,Greece,75
+SGP,Singapore,62
+HKG,Hong Kong,65
+TWN,Taiwan,60
+PHL,Philippines,55
+BGD,Bangladesh,40
+PAK,Pakistan,42
+LKA,Sri Lanka,45

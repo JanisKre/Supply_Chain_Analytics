@@ -1,0 +1,92 @@
+country_code,country_name,iso2,iso3
+004,Afghanistan,AF,AFG
+008,Albania,AL,ALB
+012,Algeria,DZ,DZA
+024,Angola,AO,AGO
+036,Australia,AU,AUS
+040,Austria,AT,AUT
+050,Bangladesh,BD,BGD
+056,Belgium,BE,BEL
+068,Bolivia,BO,BOL
+076,Brazil,BR,BRA
+100,Bulgaria,BG,BGR
+116,Cambodia,KH,KHM
+124,Canada,CA,CAN
+152,Chile,CL,CHL
+156,China,CN,CHN
+170,Colombia,CO,COL
+180,Democratic Republic of Congo,CD,COD
+188,Costa Rica,CR,CRI
+191,Croatia,HR,HRV
+203,Czech Republic,CZ,CZE
+208,Denmark,DK,DNK
+218,Ecuador,EC,ECU
+818,Egypt,EG,EGY
+233,Estonia,EE,EST
+246,Finland,FI,FIN
+250,France,FR,FRA
+276,Germany,DE,DEU
+288,Ghana,GH,GHA
+300,Greece,GR,GRC
+344,Hong Kong,HK,HKG
+348,Hungary,HU,HUN
+356,India,IN,IND
+360,Indonesia,ID,IDN
+364,Iran,IR,IRN
+372,Ireland,IE,IRL
+376,Israel,IL,ISR
+380,Italy,IT,ITA
+392,Japan,JP,JPN
+400,Jordan,JO,JOR
+404,Kenya,KE,KEN
+410,South Korea,KR,KOR
+417,Kyrgyzstan,KG,KGZ
+418,Laos,LA,LAO
+428,Latvia,LV,LVA
+440,Lithuania,LT,LTU
+458,Malaysia,MY,MYS
+484,Mexico,MX,MEX
+496,Mongolia,MN,MNG
+504,Morocco,MA,MAR
+508,Mozambique,MZ,MOZ
+516,Namibia,NA,NAM
+524,Nepal,NP,NPL
+528,Netherlands,NL,NLD
+554,New Zealand,NZ,NZL
+566,Nigeria,NG,NGA
+578,Norway,NO,NOR
+586,Pakistan,PK,PAK
+604,Peru,PE,PER
+608,Philippines,PH,PHL
+616,Poland,PL,POL
+620,Portugal,PT,PRT
+630,Puerto Rico,PR,PRI
+642,Romania,RO,ROU
+643,Russia,RU,RUS
+682,Saudi Arabia,SA,SAU
+686,Senegal,SN,SEN
+703,Slovakia,SK,SVK
+705,Slovenia,SI,SVN
+710,South Africa,ZA,ZAF
+724,Spain,ES,ESP
+752,Sweden,SE,SWE
+756,Switzerland,CH,CHE
+158,Taiwan,TW,TWN
+764,Thailand,TH,THA
+792,Turkey,TR,TUR
+800,Uganda,UG,UGA
+804,Ukraine,UA,UKR
+784,United Arab Emirates,AE,ARE
+826,United Kingdom,GB,GBR
+840,United States,US,USA
+858,Uruguay,UY,URY
+860,Uzbekistan,UZ,UZB
+704,Vietnam,VN,VNM
+887,Yemen,YE,YEM
+894,Zambia,ZM,ZMB
+716,Zimbabwe,ZW,ZWE
+450,Madagascar,MG,MDG
+104,Myanmar,MM,MMR
+408,North Korea,KP,PRK
+702,Singapore,SG,SGP
+144,Sri Lanka,LK,LKA

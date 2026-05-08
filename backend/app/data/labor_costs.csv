@@ -1,0 +1,51 @@
+iso3,country_name,labor_cost_index
+CHN,China,35
+DEU,Germany,90
+USA,United States,85
+JPN,Japan,80
+KOR,South Korea,65
+FRA,France,88
+GBR,United Kingdom,82
+ITA,Italy,78
+NLD,Netherlands,89
+BEL,Belgium,91
+AUS,Australia,87
+CAN,Canada,83
+BRA,Brazil,40
+RUS,Russia,30
+IND,India,20
+ZAF,South Africa,35
+MYS,Malaysia,30
+THA,Thailand,28
+CZE,Czech Republic,55
+POL,Poland,45
+MEX,Mexico,32
+TUR,Turkey,38
+IDN,Indonesia,22
+VNM,Vietnam,25
+MMR,Myanmar,18
+COD,DR Congo,15
+ZMB,Zambia,20
+ZWE,Zimbabwe,18
+MOZ,Mozambique,16
+MDG,Madagascar,14
+PRK,North Korea,10
+HUN,Hungary,50
+SVK,Slovakia,48
+ROU,Romania,42
+AUT,Austria,88
+SWE,Sweden,92
+NOR,Norway,95
+DNK,Denmark,93
+FIN,Finland,90
+CHE,Switzerland,96
+ESP,Spain,72
+PRT,Portugal,60
+GRC,Greece,55
+SGP,Singapore,78
+HKG,Hong Kong,80
+TWN,Taiwan,68
+PHL,Philippines,25
+BGD,Bangladesh,12
+PAK,Pakistan,15
+LKA,Sri Lanka,22
