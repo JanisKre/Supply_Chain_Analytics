@@ -1,7 +1,8 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from app.config import settings
-from app.routes import value_chain, hs_codes, baci, sankey, kpi, export, settings
+from app.routes import value_chain, hs_codes, baci, sankey, kpi, export
+from app.routes import settings as settings_router
 
 app = FastAPI(title="Supply Chain Intelligence API", version="1.0.0")
 
@@ -19,7 +20,7 @@ app.include_router(baci.router, prefix="/api")
 app.include_router(sankey.router, prefix="/api")
 app.include_router(kpi.router, prefix="/api")
 app.include_router(export.router, prefix="/api")
-app.include_router(settings.router, prefix="/api")
+app.include_router(settings_router.router, prefix="/api")
 
 
 @app.get("/health")
