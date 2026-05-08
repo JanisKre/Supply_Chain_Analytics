@@ -1,18 +1,26 @@
 import json
 import anthropic
-from app.config import settings
+from app.services.settings_store import get_settings
 
 _client: anthropic.AsyncAnthropic | None = None
+_client_config_key: str = ""
+
+
+def _config_key(s: dict) -> str:
+    return f"{s.get('api_key','')}:{s.get('base_url','')}"
 
 
 def get_client() -> anthropic.AsyncAnthropic:
-    global _client
-    if _client is None:
-        kwargs: dict = {"api_key": settings.effective_api_key}
-        base_url = settings.effective_base_url
+    global _client, _client_config_key
+    s = get_settings()
+    ck = _config_key(s)
+    if _client is None or ck != _client_config_key:
+        kwargs: dict = {"api_key": s.get("api_key", "")}
+        base_url = s.get("base_url", "")
         if base_url:
             kwargs["base_url"] = base_url
         _client = anthropic.AsyncAnthropic(**kwargs)
+        _client_config_key = ck
     return _client
 
 
@@ -83,10 +91,11 @@ def _extract_tool_input(message: anthropic.types.Message, tool_name: str) -> dic
 
 async def generate_value_chain(product: str) -> dict:
     client = get_client()
+    model = get_settings().get("model", "claude-sonnet-4-6")
     user_prompt = f"Generate a stylized value chain for: {product}"
 
     message = await client.messages.create(
-        model="claude-sonnet-4-6",
+        model=model,
         max_tokens=2000,
         system=[{"type": "text", "text": VALUE_CHAIN_SYSTEM, "cache_control": {"type": "ephemeral"}}],
         messages=[{"role": "user", "content": user_prompt}],
@@ -107,10 +116,11 @@ async def generate_value_chain(product: str) -> dict:
 
 async def assign_hs_codes(product: str, segments: list) -> dict:
     client = get_client()
+    model = get_settings().get("model", "claude-sonnet-4-6")
     user_prompt = f"Product: {product}\nSegments:\n{json.dumps(segments, indent=2)}"
 
     message = await client.messages.create(
-        model="claude-sonnet-4-6",
+        model=model,
         max_tokens=2000,
         system=[{"type": "text", "text": HS_CODES_SYSTEM, "cache_control": {"type": "ephemeral"}}],
         messages=[{"role": "user", "content": user_prompt}],

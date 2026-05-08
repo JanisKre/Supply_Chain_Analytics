@@ -2,7 +2,7 @@
 import { usePathname } from 'next/navigation'
 import Link from 'next/link'
 import { useWorkflowStore } from '@/store/workflowStore'
-import { Check } from 'lucide-react'
+import { Check, Settings } from 'lucide-react'
 
 const STEPS = [
   { id: 1, label: 'Value Chain', href: '/workflow/step1' },
@@ -17,6 +17,10 @@ const LOCK_HINTS: Record<number, string> = {
   3: 'Complete Step 2 first',
   4: 'Complete Step 3 first',
   5: 'Complete Step 4 first',
+}
+
+function getLinkClass(unlocked: boolean) {
+  return unlocked ? 'hover:bg-black/5' : 'opacity-40 cursor-not-allowed'
 }
 
 export default function WorkflowStepper() {
@@ -42,6 +46,7 @@ export default function WorkflowStepper() {
 
   const completedCount = STEPS.filter((s) => isComplete(s.id)).length
 
+
   return (
     <div className="border-b" style={{ background: 'var(--surface)', borderColor: 'rgba(0,0,0,.08)' }}>
       <div className="max-w-5xl mx-auto px-6 py-4 flex items-center gap-2">
@@ -64,9 +69,9 @@ export default function WorkflowStepper() {
               )}
               <Link
                 href={unlocked ? step.href : '#'}
-                title={!unlocked ? LOCK_HINTS[step.id] : undefined}
+                title={unlocked ? undefined : LOCK_HINTS[step.id]}
                 className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-medium transition-all ${
-                  active ? 'text-white' : unlocked ? 'hover:bg-black/5' : 'opacity-40 cursor-not-allowed'
+                  active ? 'text-white' : getLinkClass(unlocked)
                 }`}
                 style={active ? { background: 'var(--accent)' } : { color: 'var(--text-2)' }}
                 onClick={(e) => !unlocked && e.preventDefault()}
@@ -86,14 +91,24 @@ export default function WorkflowStepper() {
             </div>
           )
         })}
-        <div className="ml-auto flex items-center gap-1 text-xs" style={{ color: 'var(--text-2)' }}>
-          <span
-            className="font-semibold tabular-nums"
-            style={{ color: completedCount > 0 ? 'var(--success)' : 'var(--text-2)' }}
+        <div className="ml-auto flex items-center gap-3">
+          <div className="flex items-center gap-1 text-xs" style={{ color: 'var(--text-2)' }}>
+            <span
+              className="font-semibold tabular-nums"
+              style={{ color: completedCount > 0 ? 'var(--success)' : 'var(--text-2)' }}
+            >
+              {completedCount}
+            </span>
+            <span>/ 5</span>
+          </div>
+          <Link
+            href="/workflow/settings"
+            title="LLM Settings"
+            className="p-1.5 rounded-full hover:bg-black/5 transition-colors"
+            style={{ color: pathname === '/workflow/settings' ? 'var(--accent)' : 'var(--text-2)' }}
           >
-            {completedCount}
-          </span>
-          <span>/ 5</span>
+            <Settings size={15} />
+          </Link>
         </div>
       </div>
     </div>
