@@ -12,51 +12,55 @@ def build_sankey(file_id: str, threshold_pct: float = 2.0) -> dict:
     if total == 0:
         return {"nodes": [], "links": [], "total_trade_value": 0.0}
 
-    # Fill missing names with ISO codes
     df["exporter_name"] = df["exporter_name"].fillna(df["exporter_iso3"].fillna("Unknown"))
     df["importer_name"] = df["importer_name"].fillna(df["importer_iso3"].fillna("Unknown"))
     df["segment_name"] = df["segment_name"].fillna("Other")
+    df["vcs_id"] = pd.to_numeric(df.get("vcs_id", 0), errors="coerce").fillna(0).astype(int)
 
-    # Aggregate exporter → segment → importer
-    agg = (
-        df.groupby(["exporter_name", "segment_name", "importer_name"], as_index=False)["v"]
-        .sum()
+    # Determine segment order by vcs_id
+    seg_order = (
+        df[["segment_name", "vcs_id"]].drop_duplicates()
+        .sort_values("vcs_id")["segment_name"]
+        .tolist()
     )
-    agg["share"] = agg["v"] / total * 100
-    agg = agg[agg["share"] >= threshold_pct].copy()
 
-    # Build node list (deduplicated, order: exporters, segments, importers)
-    exporters = list(agg["exporter_name"].unique())
-    segments = list(agg["segment_name"].unique())
-    importers = [n for n in agg["importer_name"].unique() if n not in exporters and n not in segments]
-    all_nodes = exporters + segments + importers
-    node_idx = {n: i for i, n in enumerate(all_nodes)}
+    # Build nodes and links stage by stage.
+    # For segment at position seg_pos (0-indexed):
+    #   exporter node = "{name}"           if seg_pos == 0  (pure raw-material sources)
+    #   exporter node = "{name}{seg_pos}"  if seg_pos >  0  (country at level seg_pos)
+    #   importer node = "{name}{seg_pos+1}" always          (country at level seg_pos+1)
+    # This makes the same country node the target of stage N links and the
+    # source of stage N+1 links, mirroring the reference Sankey.
 
-    links = []
-    # exporter → segment
-    exp_seg = agg.groupby(["exporter_name", "segment_name"], as_index=False)["v"].sum()
-    for _, row in exp_seg.iterrows():
-        src = node_idx.get(row["exporter_name"])
-        tgt = node_idx.get(row["segment_name"])
-        if src is not None and tgt is not None:
+    all_nodes: dict[str, int] = {}
+    links: list[dict] = []
+
+    for seg_pos, seg_name in enumerate(seg_order):
+        seg_df = df[df["segment_name"] == seg_name]
+        agg = (
+            seg_df.groupby(["exporter_name", "importer_name"], as_index=False)["v"]
+            .sum()
+        )
+        agg["share"] = agg["v"] / total * 100
+        agg = agg[agg["share"] >= threshold_pct]
+
+        for _, row in agg.iterrows():
+            exp_name: str = row["exporter_name"]
+            imp_name: str = row["importer_name"]
+
+            exp_node = exp_name if seg_pos == 0 else f"{exp_name}{seg_pos}"
+            imp_node = f"{imp_name}{seg_pos + 1}"
+
+            if exp_node not in all_nodes:
+                all_nodes[exp_node] = len(all_nodes)
+            if imp_node not in all_nodes:
+                all_nodes[imp_node] = len(all_nodes)
+
             links.append({
-                "source": src,
-                "target": tgt,
+                "source": all_nodes[exp_node],
+                "target": all_nodes[imp_node],
                 "value": float(row["v"]),
-                "vcs_segment": row["segment_name"],
+                "vcs_segment": seg_name,
             })
 
-    # segment → importer
-    seg_imp = agg.groupby(["segment_name", "importer_name"], as_index=False)["v"].sum()
-    for _, row in seg_imp.iterrows():
-        src = node_idx.get(row["segment_name"])
-        tgt = node_idx.get(row["importer_name"])
-        if src is not None and tgt is not None:
-            links.append({
-                "source": src,
-                "target": tgt,
-                "value": float(row["v"]),
-                "vcs_segment": row["segment_name"],
-            })
-
-    return {"nodes": all_nodes, "links": links, "total_trade_value": total}
+    return {"nodes": list(all_nodes.keys()), "links": links, "total_trade_value": total}

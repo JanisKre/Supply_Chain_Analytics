@@ -137,6 +137,14 @@ export default function DashboardPage() {
         ))}
       </div>
 
+      {/* Skeleton loaders while computing */}
+      {dashboardLoading && countryScores.length === 0 && (
+        <>
+          <SkeletonCard rows={3} />
+          <SkeletonTable rows={6} />
+        </>
+      )}
+
       {/* Country scores table */}
       {sorted.length > 0 && (
         <div className="rounded-xl overflow-hidden" style={{ background: 'var(--surface)', boxShadow: 'var(--shadow)' }}>
@@ -216,7 +224,7 @@ export default function DashboardPage() {
                   <td className="px-4 py-3 font-mono text-xs font-semibold" style={{ color: 'var(--text)' }}>{p.exporter_iso3}</td>
                   <td className="px-4 py-3 text-xs" style={{ color: 'var(--text)' }}>${(p.trade_value / 1e6).toFixed(1)}M</td>
                   <td className="px-4 py-3 text-xs" style={{ color: 'var(--text)' }}>{p.share_pct}%</td>
-                  <td className="px-4 py-3 text-xs" style={{ color: p.composite_score != null ? 'var(--text)' : 'var(--text-2)' }}>
+                  <td className="px-4 py-3 text-xs" style={{ color: p.composite_score == null ? 'var(--text-2)' : 'var(--text)' }}>
                     {p.composite_score ?? '—'}
                   </td>
                 </tr>
